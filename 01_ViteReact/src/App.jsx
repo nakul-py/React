@@ -1,9 +1,16 @@
+import Chao from './chao'
 
 function App() {
 
   return (
-    <h1>Chai Aur React with Vite</h1>
+    <> React Fragment
+    <h2>Apple is Red</h2>
+    <Chao/>
+    <p>Rose is Red</p>
+    </>
   )
 }
 
 export default App
+
+
