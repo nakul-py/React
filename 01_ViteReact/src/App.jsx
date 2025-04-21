@@ -2,9 +2,10 @@ import Chao from './chao'
 
 function App() {
 
+  const username = 'Nakul Verma'
   return (
     <> React Fragment
-    <h2>Apple is Red</h2>
+    <h2>React with {username}</h2>
     <Chao/>
     <p>Rose is Red</p>
     </>
