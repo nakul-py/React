@@ -20,7 +20,9 @@ cd react-Vite
 - Run these commands in terminal
 ```
 npm i 
-                            #or 
+```
+**OR** 
+```
 npm install
 ```
 
@@ -68,4 +70,5 @@ content: [
 npm run dev
 ```
 
-
+**IF you are wondering how react projects works with vite and tailwindcss and you wanna learn react So you have to watch this precious 1 in million React course video**
+[React Course by Hitesh Choudhary]("https://youtu.be/FxgM9k1rg0Q?si=YvxmBXis6JP79MZ_")
