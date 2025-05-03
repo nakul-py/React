@@ -29,12 +29,13 @@ export const todoSlice = createSlice({
             state.todos.push(todo);  // push the todo to the state
         },
         removeTodo: (state, action) => {
-            state.todos = state.todos.filter((todo) => todo.id !== action.payload.id); // filter the todos and remove the todo with the id
+            state.todos = state.todos.filter((todo) => todo.id !== action.payload); // filter the todos and remove the todo with the id
         },
         updateTodo: (state, action) => {
-            const todo = state.todos.find((todo) => todo.id === action.payload.id); // find the todo with the id
+            const { id, title } = action.payload;
+            const todo = state.todos.find((todo) => todo.id === id);
             if (todo) {
-                todo.completed = !todo.completed; // toggle the completed state
+                todo.title = title;
             }
         }
     }
