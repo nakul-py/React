@@ -73,3 +73,44 @@ npm run dev
 ### **IF you are wondering how react projects works with vite and tailwindcss and you wanna learn react So you have to watch this precious 1 in million React course video**
 
 ## [React Course by Hitesh Choudhary](https://youtu.be/FxgM9k1rg0Q?si=YvxmBXis6JP79MZ)
+
+
+Install Redux JS toolkit (RTK)
+```
+npm i @reduxjs/toolkit
+```
+
+Install Redux
+
+```
+npm i react-redux
+```
+
+Install Router Dom
+
+```
+npm i react-router-dom
+```
+
+Install html parser
+
+```
+npm i html-react-parser
+```
+
+Install Appwrite
+
+```
+npm i appwrite
+```
+
+Install tinymce
+
+```
+npm i @tinymce/tinymce-react
+```
+
+Install react hook
+```
+npm i react-hook-form
+```
