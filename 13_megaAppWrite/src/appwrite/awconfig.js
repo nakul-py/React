@@ -65,11 +65,25 @@ export class Service {
 
     async uploadFile(file){
         try {
-            return await this.bucket.createFile()
+            return await this.bucket.createFile(config.appwriteBucketId, ID.unique(), file)
         } catch (error) {
             console.log("Appwrite service :: uploadfile :: error", error)
             return false
         }
+    }
+
+    async deleteFile(fileId){
+        try {
+            await this.bucket.deleteFile(config.appwriteBucketId, fileId)
+            return true
+        } catch (error) {
+            console.log("Appwrite service :: deletefile :: error", error)
+            return false
+        }
+    }
+
+    getFilePreview(fileId){
+        return this.bucket.getFilePreview(config.appwriteBucketId, fileId)
     }
 }
 
