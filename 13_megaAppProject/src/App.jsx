@@ -1,14 +1,39 @@
 import './App.css'
+import React,{ useState, useEffect } from 'react'
+import { useDispatch} from 'react-redux'
+import authService from '../src/appwrite/auth.js'
+import {login, logout} from '../src/store/authSlice.js'
+import {Header, Footer} from '../src/components/index.js'
+import { Outlet } from 'react-router-dom'
+
 
 function App() {
 
-  return (
-    <>
-     <p className='flex flex-col items-center text-9xl text-white font-bold justify-center min-h-screen p-4 bg-gray-600'>
-        Appwrite
-      </p>
-    </>
-  )
+  const [loading, setLoading] = useState(true)
+  const dispatch = useDispatch()
+
+  useEffect(() => {
+    authService.getCurrentUser()
+    .then((userData) => {
+      if(userData){
+        dispatch(login({userData}))
+      } else {
+        dispatch(logout())
+      }
+    })
+    .finally(() => setLoading(false))
+  }, [])
+
+  return !loading ? ( 
+  <div className='min-h-screen flex flex-wrap content-between bg-gray-500 text-center text-2xl font-bold'>
+    <div className='w-full block'>
+      <Header/>
+      <main>
+       TODO: {/* <Outlet/> */}
+      </main>
+      <Footer/>
+    </div>
+    </div>) : null
 }
 
 export default App
