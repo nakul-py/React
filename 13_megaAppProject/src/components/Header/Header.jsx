@@ -1,4 +1,3 @@
-/* eslint-disable no-unused-vars */
 import React from 'react'
 import {Container, Logo, LogoutBtn} from '../index'
 import { Link } from 'react-router-dom'
