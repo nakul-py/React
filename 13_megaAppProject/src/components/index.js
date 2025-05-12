@@ -9,6 +9,7 @@ import Selector from "./Selector";
 import Button from "./Button"
 import Input from "./Input"
 import SignUp from "./SignUp";
+import ProtectedContainer from "./AuthLayout";
 
 
 export {
@@ -22,5 +23,6 @@ export {
        Selector, 
        Button, 
        Input,
-       SignUp
+       SignUp,
+       ProtectedContainer
     };
