@@ -72,17 +72,10 @@ function Login() {
               type="password"
               {...register("password", {
                 required: true,
-                validate: {
-                  strongPattern: (value) =>
-                    /^(?=.*[A-Z])(?=.*\d)(?=.*[!@#$%^&*()_+{}[\]:;<>,.?~\\/-]).{8,}$/.test(
-                      value
-                    ) ||
-                    "Password must be at least 8 characters and include an uppercase letter, a number, and a special character",
-                },
               })}
             />
             <Button
-              className="font-medium text-primary transistion-all duration-200 hover:underline"
+              className="font-medium text-2xl text-primary transistion-all duration-200 hover:underline"
               type="submit"
             >
               Sign In
