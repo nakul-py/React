@@ -73,8 +73,9 @@ function PostForm({ post }) {
       if (name === "title") {
         setValue("id", idTransform(value.title), { shouldValidate: true });
       }
-      return () => subscription.unsubscribe();
     });
+    return () => subscription.unsubscribe();
+
   }, [watch, idTransform, setValue]);
 
   return (
