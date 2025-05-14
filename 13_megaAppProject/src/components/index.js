@@ -9,9 +9,9 @@ import Selector from "./Selector";
 import Button from "./Button"
 import Input from "./Input"
 import SignUp from "./SignUp";
-import ProtectedContainer from "./AuthLayout";
 import RTE from "./RTE";
 import PostForm from "./post-form/PostForm";
+import AuthLayout from "./AuthLayout"
 
 
 export {
@@ -26,7 +26,7 @@ export {
        Button, 
        Input,
        SignUp,
-       ProtectedContainer,
        RTE,
-       PostForm
+       PostForm,
+       AuthLayout
     };
