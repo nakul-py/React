@@ -15,7 +15,7 @@ export class Service {
         this.bucket = new Storage(this.client)
     }
 
-    async createPost({title, content, featuredImage, status, userId, ID}) {
+    async createPost({title, content, featuredImage, status, userId}) {
         try {
             return await this.databases.createDocument(config.appwriteDatabaseId, config.appwriteCollectionId, ID.unique(),
             {title, content, featuredImage, status,userId})
@@ -26,7 +26,7 @@ export class Service {
 
     async updatePost(ID,{title, content, featuredImage, status}){
         try {
-            return await this.databases.updateDocument(config.appwriteDatabaseId, config.appwriteCollectionId, ID.unique(),
+            return await this.databases.updateDocument(config.appwriteDatabaseId, config.appwriteCollectionId, ID,
             {title, content, featuredImage, status})
         } catch (error) {
             console.log("Appwrite service :: updatepost :: error", error)
@@ -35,7 +35,7 @@ export class Service {
 
     async deletePost(ID){
         try {
-            await this.databases.deleteDocument(config.appwriteDatabaseId, config.appwriteCollectionId, ID.unique())
+            await this.databases.deleteDocument(config.appwriteDatabaseId, config.appwriteCollectionId, ID)
             return true
         } catch (error) {
             console.log("Appwrite service :: deletepost :: error", error)
@@ -45,7 +45,7 @@ export class Service {
     
     async getPost(ID){
         try {
-            return await this.databases.getDocument(config.appwriteDatabaseId, config.appwriteCollectionId, ID.unique())
+            return await this.databases.getDocument(config.appwriteDatabaseId, config.appwriteCollectionId, ID)
         } catch (error) {
             console.log("Appwrite service :: getpost :: error", error)
         }
