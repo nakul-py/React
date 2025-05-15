@@ -21,6 +21,7 @@ function PostForm({ post }) {
 
   const submit = async (data) => {
     if (post) {
+      console.log("Submitted Data:", data);
       const file = data.image[0]
         ? await service.uploadFile(data.image[0])
         : null;
@@ -31,7 +32,7 @@ function PostForm({ post }) {
 
       const postDb = await service.updatePost(post.$id, {
         ...data,
-        featuredImage: file ? file.$id : undefined,
+        featuredImage: file ? file.$id : post.featuredImage,
       });
 
       if (postDb) {
@@ -131,7 +132,7 @@ function PostForm({ post }) {
         <Button
           type="submit"
           bgColor={post ? "bg-green-500" : undefined}
-          className="w-full"
+          className="w-full "
         >
           {post ? "Update" : "Submit"}
         </Button>
