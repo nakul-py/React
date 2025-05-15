@@ -3,7 +3,9 @@ import service from "../appwrite/awconfig.js";
 import { Link } from "react-router-dom";
 
 function Postcard({ $id, title, featuredImage }) {
-  const imageUrl = featuredImage? service.getFilePreview(featuredImage).href : null
+  const imageUrl = featuredImage? service.getFilePreview(featuredImage) : null
+  console.log("Image URL:", imageUrl);
+
 
   return (
     <Link to={`/post/${$id}`}>
