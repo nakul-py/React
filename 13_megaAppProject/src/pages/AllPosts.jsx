@@ -4,13 +4,14 @@ import service from "../appwrite/awconfig";
 
 function AllPosts() {
   const [posts, setPosts] = useState([]);
-  useEffect(() => {}, []);
-
-  service.getPostss([]).then((posts) => {
-    if (posts) {
-      setPosts(posts.documents);
-    }
-  });
+  
+  useEffect(() => {
+    service.getPostss([]).then((posts) => {
+      if (posts) {
+        setPosts(posts.documents);
+      }
+    });
+  }, []);
 
   return (
     <div className="py-8">
