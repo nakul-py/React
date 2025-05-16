@@ -5,12 +5,14 @@ import { Button, Logo, Input } from "./index";
 import { useForm } from "react-hook-form";
 import { useDispatch } from "react-redux";
 import authService from "../appwrite/auth";
+import { FaEye, FaEyeSlash } from "react-icons/fa";
 
 function Login() {
   const navigate = useNavigate();
   const dispatch = useDispatch();
   const { register, handleSubmit } = useForm();
   const [error, setError] = useState("");
+  const [showPassword, setShowPassword] = useState(false);
 
   const login = async (data) => {
     setError("");
@@ -69,11 +71,15 @@ function Login() {
             <Input
               label="Password: "
               placeholder="Enter your password"
-              type="password"
+              type={showPassword ? "text" : "password"}
               {...register("password", {
                 required: true,
               })}
-            />
+            >
+              <span onClick={() => setShowPassword((prev) => !prev)}>
+                {showPassword ? <FaEyeSlash /> : <FaEye />}
+              </span>
+            </Input>
             <Button
               className="font-medium text-2xl text-primary transistion-all duration-200 hover:underline"
               type="submit"
