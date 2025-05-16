@@ -22,12 +22,12 @@ function PostForm({ post }) {
   const submit = async (data) => {
     if (post) {
       console.log("Submitted Data:", data);
-      const file = data.image[0]
+      const file = data.image && data.image.length > 0
         ? await service.uploadFile(data.image[0])
         : null;
 
       if (file) {
-        service.deleteFile(post.featuredImage);
+        await service.deleteFile(post.featuredImage);
       }
 
       const postDb = await service.updatePost(post.$id, {
@@ -76,7 +76,6 @@ function PostForm({ post }) {
       }
     });
     return () => subscription.unsubscribe();
-
   }, [watch, idTransform, setValue]);
 
   return (
@@ -112,7 +111,7 @@ function PostForm({ post }) {
           type="file"
           className="mb-4"
           accept="image/png, image/jpg, image/jpeg, image/gif"
-          {...register("image", { required: !post })}
+          {...register("image")}
         />
         {post && (
           <div className="w-full mb-4">
