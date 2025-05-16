@@ -32,6 +32,10 @@ function Post() {
     });
   };
 
+  const handelCancel = () => {
+    navigate(-1)
+  }
+
   return post ? (
     <div className="py-8">
       <Container>
@@ -43,7 +47,10 @@ function Post() {
           />
 
           {isAuthor && (
-            <div className="absolute right-6 top-6">
+            <div className="absolute right-6 top-20">
+              <Button bgColor="bg-blue-500" className="mr-3" onClick={handelCancel}>
+                Cancel
+              </Button>
               <Link to={`/edit-post/${post.$id}`}>
                 <Button bgColor="bg-green-500" className="mr-3">
                   Edit
