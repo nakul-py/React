@@ -5,12 +5,14 @@ import { useForm } from "react-hook-form";
 import { useDispatch } from "react-redux";
 import { Button, Logo, Input } from "./index";
 import { login as authlogiN } from "../store/authSlice";
+import { FaEye, FaEyeSlash } from "react-icons/fa";
 
 function SignUp() {
   const navigate = useNavigate();
   const dispatch = useDispatch();
   const { register, handleSubmit } = useForm();
   const [error, setError] = useState("");
+  const [showPassword, setShowPassword] = useState(false);
 
   const create = async (data) => {
     setError("");
@@ -75,19 +77,22 @@ function SignUp() {
             />
             <Input
               label="Password: "
-              type="password"
+              type={showPassword ? "text" : "password"}
               placeholder="Enter your password"
               {...register("password", {
                 required: true,
               })}
-            />
+            >
+              <span onClick={() => setShowPassword((prev) => !prev)}>
+                {showPassword ? <FaEyeSlash /> : <FaEye />}
+              </span>
+            </Input>
             <Button type="submit" className="w-full">
               Create Account
             </Button>
           </div>
         </form>
       </div>
-
     </div>
   );
 }
