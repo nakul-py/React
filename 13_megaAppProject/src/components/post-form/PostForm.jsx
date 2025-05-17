@@ -1,9 +1,10 @@
-import React, { useCallback, useEffect } from "react";
+import React, { useCallback, useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
 import { useNavigate } from "react-router-dom";
-import { useSelector } from "react-redux";
+import { useSelector, useDispatch } from "react-redux";
 import { Button, Input, Selector, RTE } from "../index";
 import service from "../../appwrite/awconfig";
+import { addPost } from "../../store/postSlice";
 
 function PostForm({ post }) {
   const navigate = useNavigate();
@@ -18,43 +19,55 @@ function PostForm({ post }) {
     });
 
   const userData = useSelector((state) => state.auth.userData);
+  const dispatch = useDispatch();
+  const [isSubmitting, setIsSubmitting] = useState(false);
 
   const submit = async (data) => {
-    if (post) {
-      console.log("Submitted Data:", data);
-      const file = data.image && data.image.length > 0
-        ? await service.uploadFile(data.image[0])
-        : null;
+    setIsSubmitting(true);
+    try {
+      if (post) {
+        console.log("Submitted Data:", data);
+        const file =
+          data.image && data.image.length > 0
+            ? await service.uploadFile(data.image[0])
+            : null;
 
-      if (file) {
-        await service.deleteFile(post.featuredImage);
-      }
+        if (file) {
+          await service.deleteFile(post.featuredImage);
+        }
 
-      const postDb = await service.updatePost(post.$id, {
-        ...data,
-        featuredImage: file ? file.$id : post.featuredImage,
-      });
-
-      if (postDb) {
-        navigate(`/post/${postDb.$id}`);
-      }
-    } else {
-      const file = data.image[0]
-        ? await service.uploadFile(data.image[0])
-        : null;
-
-      if (file) {
-        const fileId = file.$id;
-        data.featuredImage = fileId;
-        const postDb = await service.createPost({
+        const postDb = await service.updatePost(post.$id, {
           ...data,
-          userId: userData.$id,
+          featuredImage: file ? file.$id : post.featuredImage,
         });
 
         if (postDb) {
-          navigate(`/post/${postDb.$id}`);
+          dispatch(addPost(postDb));
+          navigate(`/`);
+        }
+      } else {
+        const file =
+          data.image && data.image.length > 0
+            ? await service.uploadFile(data.image[0])
+            : null;
+
+        const postPayload = {
+          ...data,
+          userId: userData.$id,
+          featuredImage: file ? file.$id : null,
+        };
+
+        const postDb = await service.createPost(postPayload);
+
+        if (postDb) {
+          dispatch(addPost(postDb));
+          navigate(`/`);
         }
       }
+    } catch (error) {
+      console.error("Post submission error:", error);
+    } finally {
+      setIsSubmitting(false);
     }
   };
 
@@ -130,10 +143,20 @@ function PostForm({ post }) {
         />
         <Button
           type="submit"
+          disabled={isSubmitting}
           bgColor={post ? "bg-green-500" : undefined}
           className="w-full "
         >
-          {post ? "Update" : "Submit"}
+          {isSubmitting ? (
+            <>
+              <span className="loader border-white border-t-transparent border-2 rounded-full w-4 h-4 animate-spin"></span>
+              {post ? "Updating..." : "Submitting..."}
+            </>
+          ) : post ? (
+            "Update"
+          ) : (
+            "Submit"
+          )}
         </Button>
       </div>
     </form>
