@@ -1,17 +1,38 @@
-import React, { useState, useEffect } from "react";
+import React, { useEffect } from "react";
 import { Container, Postcard } from "../components";
 import service from "../appwrite/awconfig";
+import { useDispatch, useSelector } from "react-redux";
+import { setPosts } from "../store/postSlice";
 
 function AllPosts() {
-  const [posts, setPosts] = useState([]);
-  
+  const dispatch = useDispatch();
+  const posts = useSelector((state) => state.post.posts || []);
+  const [loading, setLoading] = React.useState(true);
+
   useEffect(() => {
-    service.getPostss([]).then((posts) => {
-      if (posts) {
-        setPosts(posts.documents);
+    const fetchPosts = async () => {
+      try {
+        const allPosts = await service.getPostss();
+        dispatch(setPosts(allPosts.documents));
+      } catch (err) {
+        console.error("Failed to fetch posts", err);
+      } finally {
+        setLoading(false);
       }
-    });
-  }, []);
+    };
+
+    fetchPosts();
+  }, [dispatch]);
+
+  if (loading) {
+    return (
+      <div className="w-full py-8 mt-4 text-center">
+        <Container>
+          <p className="text-xl">Loading Posts...</p>
+        </Container>
+      </div>
+    );
+  }
 
   return (
     <div className="py-8">
