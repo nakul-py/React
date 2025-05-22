@@ -1,4 +1,3 @@
-/* eslint-disable no-useless-catch */
 import config from "../config/config";
 import { Client, Account, ID } from "appwrite";
 
@@ -23,30 +22,30 @@ export class AuthService {
       );
       if (userAccount) {
         // call another method
-        return this.login({email, password});
+        return this.login({ email, password });
       } else {
         return userAccount;
       }
     } catch (error) {
-      throw error;
+      console.log("Appwrite serive :: createAccount :: error", error);
     }
   }
   async login({ email, password }) {
     try {
       return await this.account.createEmailPasswordSession(email, password);
     } catch (error) {
-      throw error;
+      console.log("Appwrite serive :: login :: error", error);
     }
   }
   async getCurrentUser() {
     try {
       return await this.account.get();
-  } catch (error) {
+    } catch (error) {
       console.log("Appwrite serive :: getCurrentUser :: error", error);
-  }
+    }
 
-  return null;
-}
+    return null;
+  }
 
   async logout() {
     try {
